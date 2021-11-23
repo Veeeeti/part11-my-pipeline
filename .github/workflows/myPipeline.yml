@@ -1,0 +1,36 @@
+name: My pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branch: [main]
+    types: [opened, synchronize]
+
+jobs:
+  myPipeline:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Install frontend
+        working-directory: phonebook-backend
+        run: npm i 
+      - name: lint backend
+        run: npm run lint
+      - name: build frontend
+        run: |
+          npm ci
+          npm run build
+          cp -r build ../phonebook-backend
+      - name: heroku deployment
+        if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') && success()}}
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "my-app-pipeline"
+          heroku_email: "veeti.roponen@gmail.com"
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
