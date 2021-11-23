@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - name: Install frontend
+      - name: Install backend
         working-directory: phonebook-backend
         run: npm i 
       - name: lint backend

@@ -15,15 +15,14 @@ module.exports = {
         ],
         'linebreak-style': [
             'error',
-            'unix'
+            'windows'
         ],
         'quotes': [
             'error',
             'single'
         ],
         'semi': [
-            'error',
-            ','
+            0
         ],
         'eqeqeq': 'error',
         'no-trailing-spaces': 'error',

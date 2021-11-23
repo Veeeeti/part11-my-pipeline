@@ -1,4 +1,5 @@
 require('dotenv').config()
+// eslint-disable-next-line no-unused-vars
 const { response } = require('express')
 const express = require('express')
 const morgan = require('morgan')
@@ -15,9 +16,9 @@ const errorHandler = (error, request, response, next) => {
     console.error(error.message)
 
     if (error.name === 'CastError') {
-        return response.status(400).send({error: 'malformed id'})
+        return response.status(400).send({ error: 'malformed id' })
     } else if (error.name === 'ValidationError') {
-        return response.status(400).json({error: error.message})
+        return response.status(400).json({ error: error.message })
     }
 
     next(error)
@@ -26,7 +27,7 @@ const errorHandler = (error, request, response, next) => {
 app.use(errorHandler)
 
 app.get('/', (req, res) => {
-  res.send('<h1>Hello World!</h1>')
+    res.send('<h1>Hello World!</h1>')
 })
 
 app.get('/api/persons/:id', (request,response, next) => {
@@ -37,7 +38,7 @@ app.get('/api/persons/:id', (request,response, next) => {
             response.status(404).end()
         }
     })
-    .catch(error => next(error))
+        .catch(error => next(error))
 })
 
 app.get('/api/persons', (request, response) => {
@@ -52,17 +53,18 @@ app.get('/info', (req, res) => {
 
 app.delete('/api/persons/:id' , (request,response, next) => {
     Person.findByIdAndRemove(request.params.id)
-    .then(result => {
-        response.status(204).end()
-    })
-    .catch(error => next(error))
+    // eslint-disable-next-line no-unused-vars
+        .then(result => {
+            response.status(204).end()
+        })
+        .catch(error => next(error))
 })
 
 app.post('/api/persons', (request, response, next) => {
     const body = request.body
 
     if (!body.name || !body.number) {
-        return response.status(400).json({error:'content missing'})
+        return response.status(400).json({ error:'content missing' })
     }
 
     const person = new Person({
@@ -72,10 +74,10 @@ app.post('/api/persons', (request, response, next) => {
     console.log(person)
 
     person.save()
-    .then(savedPerson => {
-        response.json(savedPerson)
-    })
-    .catch(e => next(e))
+        .then(savedPerson => {
+            response.json(savedPerson)
+        })
+        .catch(e => next(e))
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
@@ -85,16 +87,17 @@ app.put('/api/persons/:id', (request, response, next) => {
         number: body.number,
     }
 
-    Person.findByIdAndUpdate(request.params.id, newPerson, {new: true})
-    .then(updatePerson => {
-        response.json(updatePerson)
-    })
-    .catch(error => next(error))
+    Person.findByIdAndUpdate(request.params.id, newPerson, { new: true })
+        .then(updatePerson => {
+            response.json(updatePerson)
+        })
+        .catch(error => next(error))
 })
 
 
+// eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 3001
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+    console.log(`Server running on port ${PORT}`)
 })
