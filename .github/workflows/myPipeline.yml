@@ -3,7 +3,7 @@ name: My pipeline
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   myPipeline:
