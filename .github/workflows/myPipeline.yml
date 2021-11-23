@@ -17,6 +17,7 @@ jobs:
         working-directory: phonebook-backend
         run: npm i 
       - name: lint backend
+        working-directory: phonebook-backend
         run: npm run lint
       - name: build frontend
         run: |
