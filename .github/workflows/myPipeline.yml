@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branch: [main]
+    types: [opened, synchronize]
 
 jobs:
   myPipeline:
@@ -23,8 +26,8 @@ jobs:
           npm ci
           npm run build
           cp -r build ../phonebook-backend
-      - name: heroku deployment
-        uses: akhileshns/heroku-deploy@v3.12.12 
+
+      - uses: akhileshns/heroku-deploy@v3.12.12 
         if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') && success()}}
         uses: akhileshns/heroku-deploy@v3.12.12 
         with:
