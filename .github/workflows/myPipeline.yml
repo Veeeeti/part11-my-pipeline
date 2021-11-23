@@ -20,6 +20,7 @@ jobs:
         working-directory: phonebook-backend
         run: npm run lint
       - name: build frontend
+        working-directory: phonebook-frontend
         run: |
           npm ci
           npm run build
