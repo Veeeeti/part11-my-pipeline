@@ -28,6 +28,7 @@ jobs:
           cp -r build ../phonebook-backend
       - name: heroku deployment
         if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') && success()}}
+        uses: akhileshns/heroku-deploy@v3.12.12 
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "my-app-pipeline"
