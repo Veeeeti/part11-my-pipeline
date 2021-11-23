@@ -1,5 +1,5 @@
+/* eslint-disable react/style-prop-object */
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import personsService from './services/persons.js'
 import './index.css'
 
